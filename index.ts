@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { checkCyrillic } from "./checkCyrillic"
+import { checkCyrillic } from './checkCyrillic'
 
 const token = "5059059257:AAGQZ10O1pGON0QVoku-k6r2xy1e-Z5ywAM"
 
