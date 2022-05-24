@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node js/index.js"
+    "start": "nodemon index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,8 @@
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
-    "@types/node": "^16.11.11"
+    "@types/node": "^16.11.11",
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.7.0"
   }
 }

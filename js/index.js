@@ -4,6 +4,7 @@ const checkCyrillic_1 = require("./checkCyrillic");
 const token = "5059059257:AAGQZ10O1pGON0QVoku-k6r2xy1e-Z5ywAM";
 const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(token, { polling: true });
+console.log(TelegramBot.messageTypes());
 bot.onText(/\/echo (.+)/, (msg, match) => {
     const chatId = msg.chat.id;
     const resp = match[1];
