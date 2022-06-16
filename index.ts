@@ -1,41 +1,44 @@
-// @ts-nocheck
-import { checkCyrillic, getMessageType } from './methods'
 
-const token = "5059059257:AAGQZ10O1pGON0QVoku-k6r2xy1e-Z5ywAM"
+import { checkCyrillic, getMessageType } from './methods'
+import { Message } from 'node-telegram-bot-api/index'
+import { listeners } from 'process';
+
+const token: string = "5059059257:AAGQZ10O1pGON0QVoku-k6r2xy1e-Z5ywAM"
 
 const TelegramBot = require('node-telegram-bot-api');
 
-// replace the value below with the Telegram token you receive from @BotFather
-//const token = 'YOUR_TELEGRAM_BOT_TOKEN';
+const youTube: string = "https://www.youtube.com/results?search_query=";
 
-// Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
 
-// Matches "/echo [whatever]"
-bot.onText(/\/ttt (.+)/, (msg, match) => {
-  // 'msg' is the received Message from Telegram
-  // 'match' is the result of executing the regexp above on the text content
-  // of the message
+console.log(`--->>> ${bot.message}`);
 
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
-  console.log(`resp = ${resp}`);
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
+
+bot.onText(/\/youtube (.+)/, (msg: Message, match: string[]) => {
+  const chatId: number = msg.chat.id;
+  const resp = match[1];
+  console.log(`resp = ${resp} match: ${match} & ${match.length}`);
+  bot.sendMessage(chatId, `${youTube}${resp}`);
 });
 
-// Listen for any kind of message. There are different kinds of
-// messages.
-
-
-bot.on('message', function (msg) {
+bot.on('message', (msg: Message) => {
   const chatId = msg.chat.id;
   const msgType = getMessageType(msg)
-  console.log(`${msgType}`);
+  console.log(`msgType: ${msgType}`);
   if (msgType === 'text') {
-    console.log(`${msg.text}`);
-    bot.sendMessage(chatId, checkCyrillic(msg.text))
+    console.log(msg);
+    if (msg.text) {
+      bot.sendMessage(chatId, checkCyrillic(msg.text))
+    }
   } else { bot.sendMessage(chatId, `message type must be "text" instead of "${msgType}"`); }
 });
+
+
+bot.on('sticker', (msg: Message) => {
+  const chatId: number = msg.chat.id;
+  const msgType = getMessageType(msg)
+  console.log(`${msgType}`);
+  bot.sendMessage(chatId, msgType);
+})
 
 
