@@ -11,34 +11,14 @@ const youTube: string = "https://www.youtube.com/results?search_query=";
 
 const bot = new TelegramBot(token, { polling: true });
 
-console.log(`--->>> ${bot.message}`);
-
-
-bot.onText(/\/youtube (.+)/, (msg: Message, match: string[]) => {
-  const chatId: number = msg.chat.id;
-  const resp = match[1];
-  console.log(`resp = ${resp} match: ${match} & ${match.length}`);
-  bot.sendMessage(chatId, `${youTube}${resp}`);
-});
-
 bot.on('message', (msg: Message) => {
+  console.log("message: ", msg);
   const chatId = msg.chat.id;
-  const msgType = getMessageType(msg)
-  console.log(`msgType: ${msgType}`);
-  if (msgType === 'text') {
-    console.log(msg);
-    if (msg.text) {
-      bot.sendMessage(chatId, checkCyrillic(msg.text))
-    }
-  } else { bot.sendMessage(chatId, `message type must be "text" instead of "${msgType}"`); }
-});
-
-
-bot.on('sticker', (msg: Message) => {
-  const chatId: number = msg.chat.id;
-  const msgType = getMessageType(msg)
-  console.log(`${msgType}`);
-  bot.sendMessage(chatId, msgType);
-})
-
-
+  const msgType = getMessageType(msg);
+  if (msg.text){
+    bot.sendMessage(chatId, checkCyrillic(msg.text))
+  } else {
+    bot.sendMessage(chatId, `message type must be "text" instead of "${msgType}"`);
+  }
+}
+)

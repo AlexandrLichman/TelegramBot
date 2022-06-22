@@ -3,18 +3,14 @@ import { regex } from "./regex";
 const TelegramBot = require('node-telegram-bot-api');
 
 export const checkCyrillic = (customMessage: string): string => {
-  console.log(`function = ${customMessage}`);
-  const customMessage1 = customMessage.match(regex);
-  if (customMessage1 !== null) {
-    customMessage = customMessage1.join("");
-  }
-  if (customMessage == '  ') {
-    return `there is single space character`
-  } else if (customMessage === null) {
+  console.log(`function checkCyrillic = ${customMessage}`);
+  let customMessageArray = customMessage.match(regex);
+  console.log(`function checkCyrillic customMessageArray = ${customMessageArray} and ${typeof customMessageArray}`);
+
+  if (customMessageArray === null || customMessageArray.every(x => x === " ")) {
     return `there is no valid character`
   }
-
-  return customMessage;
+  return customMessageArray.join("");
 }
 
 export const getMessageType = (msg: Message) => {
